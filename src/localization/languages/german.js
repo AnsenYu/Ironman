@@ -180,7 +180,7 @@ export default {
 
     [KEYS.KEYPAIR_Header]:`Erstelle ein neues Schlüsselpaar`,
     [KEYS.KEYPAIR_Description]:`
-        Hier kannst du EOS-Schlüsselpaare erzeugen. Die erzeugten Schlüsselpaare werden lokal auf deinem Rechner erzeugt und werden nie versendet.
+        Hier kannst du ENU-Schlüsselpaare erzeugen. Die erzeugten Schlüsselpaare werden lokal auf deinem Rechner erzeugt und werden nie versendet.
         Du kannst auch ein Schlüsselpaar hinzufügen und überprüfen, ob der private Schlüssel mit dem öffentlichen Schlüssel übereinstimmt.
         Beachte, dass diese Schlüssel durch Entropie erzeugt werden, die von deinem Computer und nicht von einem bestimmten Seed stammen.
     `,
@@ -268,7 +268,7 @@ export default {
         'Netzwerk-Host ungültig',
 
         `Der eingegebene Netzwerk-Host war ungültig. Hosts sollten entweder ein Domänenname
-        ( z.B: testnet.eos.io) oder eine IP ( z.B: 192.168.0.1 ) sein.`
+        ( z.B: testnet.enu) oder eine IP ( z.B: 192.168.0.1 ) sein.`
     ],
     //2
     [KEYS.ALERT_NetworkExists]:[

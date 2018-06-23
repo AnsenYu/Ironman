@@ -5,7 +5,7 @@ import Error from './models/errors/Error'
 import Network from './models/Network'
 import IdGenerator from './util/IdGenerator';
 import PluginRepository from './plugins/PluginRepository';
-const ecc = require('eosjs-ecc');
+const ecc = require('enujs-ecc');
 import {strippedHost} from './util/GenericTools'
 
 

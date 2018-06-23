@@ -290,7 +290,7 @@ export default {
         '네트워크 호스트 오류',
 
         `입력한 네트워크 호스트가 유효하지 않습니다. 호스트는 도메인 이름이어야 합니다.
-         도메인(예: testnet.eos.io) 또는 IP (예: 192.168.0.1).`
+         도메인(예: testnet.enu) 또는 IP (예: 192.168.0.1).`
     ],
     //2
     [KEYS.ALERT_NetworkExists]:[

@@ -1,5 +1,5 @@
 import * as PluginTypes from './PluginTypes';
-import EOS from './defaults/eos';
+import ENU from './defaults/enu';
 import ETH from './defaults/eth';
 
 /***
@@ -15,7 +15,7 @@ class PluginRepositorySingleton {
     }
 
     loadPlugins(){
-        this.plugins.push(new EOS());
+        this.plugins.push(new ENU());
         this.plugins.push(new ETH());
     }
 

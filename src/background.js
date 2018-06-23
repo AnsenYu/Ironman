@@ -325,7 +325,7 @@ export default class Background {
                 if(!identity) return sendResponse(Error.identityMissing());
                 identity.decrypt(seed);
 
-                const plugin = PluginRepository.plugin(Blockchains.EOS);
+                const plugin = PluginRepository.plugin(Blockchains.ENU);
                 plugin.signer(this, {data:payload.domain}, identity.publicKey, sendResponse, true);
             })
         })

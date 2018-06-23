@@ -46,7 +46,7 @@ export const IdentityBaseFields = {
 scatter.getIdentity({
     personal:['email'],
     accounts:[
-        {blockchain:Blockchains.EOS,network:{chainId:1}},
+        {blockchain:Blockchains.ENU,network:{chainId:1}},
         {blockchain:Blockchains.ETH,network:{chainId:1}}
     ],
     location:['country']
@@ -139,7 +139,7 @@ export class LocationInformation {
 /*                 Identity                 */
 /********************************************/
 
-let {PrivateKey} = require('eosjs-ecc');
+let {PrivateKey} = require('enujs-ecc');
 
 export default class Identity {
 

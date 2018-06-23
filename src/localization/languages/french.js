@@ -313,7 +313,7 @@ export default {
         'Hôte Réseau invalide',
 
         `L'Hôte réseau que vous avez saisi est invalide. L'Hôte doit être un
-         nom de domaine ( ex: testnet.eos.io ) ou une adresse IP ( ex: 192.168.0.1 ).`
+         nom de domaine ( ex: testnet.enu ) ou une adresse IP ( ex: 192.168.0.1 ).`
     ],
     //2
     [KEYS.ALERT_NetworkExists]:[

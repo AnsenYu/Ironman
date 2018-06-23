@@ -219,7 +219,7 @@
                 this.prompt.responder(null);
                 NotificationService.close();
             },
-            isCurrencyContract(){ return !!this.messages.find(message => message.code === 'eos') },
+            isCurrencyContract(){ return !!this.messages.find(message => message.code === 'enu') },
             toggleWhitelist(){
                 const flip = () => this.whitelisted = !this.whitelisted;
 

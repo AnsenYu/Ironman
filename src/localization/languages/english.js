@@ -271,7 +271,7 @@ export default {
     [KEYS.ALERT_NoAccountsFound]:[
         'No Accounts Found',
 
-        `No accounts were found connected to this private/public key. Make sure there is an EOS account linked to this public key on the EOS network.`
+        `No accounts were found connected to this private/public key. Make sure there is an ENU account linked to this public key on the ENU network.`
     ],
     //2
     [KEYS.ALERT_PasswordsDoNotMatch]:[
@@ -296,7 +296,7 @@ export default {
         'Network Host Invalid',
 
         `The Network host you entered was invalid. Hosts should be either a domain name
-         ( ex: testnet.eos.io ) or an IP ( ex: 192.168.0.1 ).`
+         ( ex: testnet.enu ) or an IP ( ex: 192.168.0.1 ).`
     ],
     //2
     [KEYS.ALERT_NetworkExists]:[

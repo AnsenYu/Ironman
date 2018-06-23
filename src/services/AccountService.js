@@ -1,8 +1,8 @@
 import Account from '../models/Account'
 import PluginRepository from '../plugins/PluginRepository'
 
-// TODO: Only dependence on eosjs
-import * as Eos from 'eosjs';
+// TODO: Only dependence on enujs
+import * as Enu from 'enujs';
 
 export default class AccountService {
 

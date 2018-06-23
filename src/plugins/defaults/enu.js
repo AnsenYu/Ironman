@@ -6,11 +6,11 @@ import StringHelpers from '../../util/StringHelpers'
 import Error from '../../models/errors/Error'
 import Network from '../../models/Network'
 import Account from '../../models/Account'
-// const ecc = require('eosjs-ecc');
+// const ecc = require('enujs-ecc');
 import AlertMsg from '../../models/alerts/AlertMsg'
 import * as Actions from '../../store/constants';
-import Eos from 'eosjs'
-let {ecc, Fcbuffer} = Eos.modules;
+import Enu from 'enujs'
+let {ecc, Fcbuffer} = Enu.modules;
 import {IdentityRequiredFields} from '../../models/Identity';
 import ObjectHelpers from '../../util/ObjectHelpers'
 import * as ricardianParser from 'eos-rc-parser';
@@ -23,20 +23,20 @@ let throwIfNoIdentity = new WeakMap();
 
 const proxy = (dummy, handler) => new Proxy(dummy, handler);
 
-export default class EOS extends Plugin {
+export default class ENU extends Plugin {
 
-    constructor(){ super(Blockchains.EOS, PluginTypes.BLOCKCHAIN_SUPPORT) }
+    constructor(){ super(Blockchains.ENU, PluginTypes.BLOCKCHAIN_SUPPORT) }
     accountFormatter(account){ return `${account.name}@${account.authority}` }
     returnableAccount(account){ return { name:account.name, authority:account.authority }}
 
     async getEndorsedNetwork(){
         return new Promise((resolve, reject) => {
             resolve(new Network(
-                'EOS Mainnet', 'https',
-                'nodes.get-scatter.com',
+                'ENU Mainnet', 'https',
+                'rpc.enu.one',
                 443,
-                Blockchains.EOS,
-                'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
+                Blockchains.ENU,
+                'cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f'
             ));
         });
     }
@@ -50,11 +50,12 @@ export default class EOS extends Plugin {
     importAccount(keypair, network, context, accountSelected){
         const getAccountsFromPublicKey = (publicKey, network) => {
             return new Promise((resolve, reject) => {
-                const eos = Eos({httpEndpoint:`${network.protocol}://${network.hostport()}`});
-                eos.getKeyAccounts(publicKey).then(res => {
+                const enu = Enu({httpEndpoint:`${network.protocol}://${network.hostport()}`});
+                //console.log(`send to ${network.protocol}://${network.hostport()}`);
+                enu.getKeyAccounts(publicKey).then(res => {
                     if(!res || !res.hasOwnProperty('account_names')){ resolve([]); return false; }
 
-                    Promise.all(res.account_names.map(name => eos.getAccount(name).catch(e => resolve([])))).then(multires => {
+                    Promise.all(res.account_names.map(name => enu.getAccount(name).catch(e => resolve([])))).then(multires => {
                         let accounts = [];
                         multires.map(account => {
                             account.permissions.map(permission => {
@@ -95,10 +96,10 @@ export default class EOS extends Plugin {
         return ecc.PrivateKey.fromHex(Buffer.from(privateKey, 'hex')).toString();
     }
 
-    async getBalances(account, network, code = 'eosio.token', table = 'accounts'){
-        const eos = Eos({httpEndpoint:`${network.protocol}://${network.hostport()}`, chainId:network.chainId});
-        const contract = await eos.contract(code);
-        return await eos.getTableRows({
+    async getBalances(account, network, code = 'enu.token', table = 'accounts'){
+        const enu = Enu({httpEndpoint:`${network.protocol}://${network.hostport()}`, chainId:network.chainId});
+        const contract = await enu.contract(code);
+        return await enu.getTableRows({
             json: true,
             code,
             scope: account.name,
@@ -136,7 +137,7 @@ export default class EOS extends Plugin {
         throwIfNoIdentity = args[1];
 
         // Protocol will be deprecated.
-        return (network, _eos, _options = {}, protocol = 'http') => {
+        return (network, _enu, _options = {}, protocol = 'http') => {
             if(!['http', 'https', 'ws'].includes(protocol))
                 throw new Error('Protocol must be either http, https, or ws');
 
@@ -148,10 +149,10 @@ export default class EOS extends Plugin {
             if(!network.isValid()) throw Error.noNetwork();
             const httpEndpoint = `${network.protocol}://${network.hostport()}`;
 
-            // The proxy stands between the eosjs object and scatter.
+            // The proxy stands between the enujs object and scatter.
             // This is used to add special functionality like adding `requiredFields` arrays to transactions
-            return proxy(_eos({httpEndpoint, chainId:_options.chainId}), {
-                get(eosInstance, method) {
+            return proxy(_enu({httpEndpoint, chainId:_options.chainId}), {
+                get(enuInstance, method) {
 
                     let returnedFields = null;
 
@@ -168,7 +169,7 @@ export default class EOS extends Plugin {
                             throwIfNoIdentity();
 
                             // Friendly formatting
-                            signargs.messages = await requestParser(_eos, signargs, httpEndpoint, args[0], _options.chainId);
+                            signargs.messages = await requestParser(_enu, signargs, httpEndpoint, args[0], _options.chainId);
 
                             const payload = Object.assign(signargs, { domain:strippedHost(), network, requiredFields });
                             const result = await messageSender(NetworkMessageTypes.REQUEST_SIGNATURE, payload);
@@ -186,16 +187,16 @@ export default class EOS extends Plugin {
                                     result.signatures.push(multiSigKeyProvider.signProvider(signargs.buf, signargs.sign));
                                 }
 
-                                // Returning only the signatures to eosjs
+                                // Returning only the signatures to enujs
                                 return result.signatures;
                             }
 
                             return result;
                         };
 
-                        // TODO: We need to check about the implications of multiple eosjs instances
+                        // TODO: We need to check about the implications of multiple enujs instances
                         return new Promise((resolve, reject) => {
-                            _eos(Object.assign(_options, {httpEndpoint, signProvider}))[method](...args)
+                            _enu(Object.assign(_options, {httpEndpoint, signProvider}))[method](...args)
                                 .then(result => {
 
                                     // Standard method ( ie. not contract )
@@ -230,9 +231,9 @@ export default class EOS extends Plugin {
     }
 }
 
-const requestParser = async (_eos, signargs, httpEndpoint, possibleSigner, chainId) => {
+const requestParser = async (_enu, signargs, httpEndpoint, possibleSigner, chainId) => {
 
-    const eos = _eos({httpEndpoint, chainId});
+    const enu = _enu({httpEndpoint, chainId});
 
     const contracts = signargs.transaction.actions.map(action => action.account)
         .reduce((acc, contract) => {
@@ -246,11 +247,11 @@ const requestParser = async (_eos, signargs, httpEndpoint, possibleSigner, chain
     await Promise.all(contracts.map(async contractAccount => {
         const cachedABI = await messageSender(NetworkMessageTypes.ABI_CACHE, {abiContractName:contractAccount, abiGet:true, chainId});
 
-        if(cachedABI === 'object' && cachedABI.timestamp > +new Date((await eos.getAccount(contractAccount)).last_code_update))
-            abis[contractAccount] = eos.fc.abiCache.abi(contractAccount, cachedABI.abi);
+        if(cachedABI === 'object' && cachedABI.timestamp > +new Date((await enu.getAccount(contractAccount)).last_code_update))
+            abis[contractAccount] = enu.fc.abiCache.abi(contractAccount, cachedABI.abi);
 
         else {
-            abis[contractAccount] = (await eos.contract(contractAccount)).fc;
+            abis[contractAccount] = (await enu.contract(contractAccount)).fc;
             const savableAbi = JSON.parse(JSON.stringify(abis[contractAccount]));
             delete savableAbi.schema;
             delete savableAbi.structs;

@@ -1,4 +1,4 @@
-const ecc = require('eosjs-ecc');
+const ecc = require('enujs-ecc');
 const scrypt = require('scrypt-async');
 
 export default class Hasher {

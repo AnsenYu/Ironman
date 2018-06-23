@@ -28,7 +28,7 @@
     import AlertMsg from '../models/alerts/AlertMsg'
     import IdentityService from '../services/IdentityService';
     import Mnemonic from '../util/Mnemonic'
-    import EOSKeygen from '../util/EOSKeygen'
+    import ENUKeygen from '../util/ENUKeygen'
     import StorageService from '../services/StorageService'
     import AuthenticationService from '../services/AuthenticationService'
 

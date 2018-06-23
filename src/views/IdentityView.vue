@@ -123,7 +123,7 @@
     import AlertMsg from '../models/alerts/AlertMsg'
     import IdentityService from '../services/IdentityService'
     import AccountService from '../services/AccountService'
-    import EOSKeygen from '../util/EOSKeygen'
+    import ENUKeygen from '../util/ENUKeygen'
     import {Countries} from '../data/Countries'
     import PluginRepository from '../plugins/PluginRepository'
     import {Blockchains} from '../models/Blockchains'

@@ -7,7 +7,7 @@ import {Blockchains} from '../models/Blockchains'
 const enabled = false;
 
 setTimeout(() => {
-    PluginRepository.plugin(Blockchains.EOS)
+    PluginRepository.plugin(Blockchains.ENU)
         .getEndorsedNetwork()
         .then(network => ridl.setNetwork(network));
 }, 50);
@@ -26,7 +26,7 @@ export default class RIDLService {
             context[Actions.PUSH_ALERT](AlertMsg.ClaimIdentity(newName)).then(async res => {
                 if(!res || !res.hasOwnProperty('text')) return reject(null);
 
-                if(!PluginRepository.plugin(Blockchains.EOS).validPrivateKey(res.text))
+                if(!PluginRepository.plugin(Blockchains.ENU).validPrivateKey(res.text))
                     return reject(context[Actions.PUSH_ALERT](AlertMsg.InvalidPrivateKey()));
 
                 const signedHash = ridl.sign(hash, res.text);

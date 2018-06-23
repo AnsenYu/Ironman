@@ -159,7 +159,7 @@ export default {
 
     [KEYS.KEYPAIR_Header]:`Generaj javni in privatni ključ`,
     [KEYS.KEYPAIR_Description]:`
-        Tukaj lahko generirate zasebni in javni EOS ključ. Ključi so generirani lokalno na vašem računalniku in
+        Tukaj lahko generirate zasebni in javni ENU ključ. Ključi so generirani lokalno na vašem računalniku in
         se nikoli nikamor ne pošiljajo.
     `,
     [KEYS.KEYPAIR_Validation_Header]:`Generiraj javni in privatni ključ`,
@@ -237,7 +237,7 @@ export default {
         'Nerpavilen naslov strežnika',
 
         `Naslov strežnika mora vsebovati (ime strežnika) ali IP številko.
-         ( primer: testnet.eos.io ) ali IP (primer: 192.168.0.1 ).`
+         ( primer: testnet.enu ) ali IP (primer: 192.168.0.1 ).`
     ],
     [KEYS.ALERT_NetworkExists]:[
         'Omrežje že obstaja',

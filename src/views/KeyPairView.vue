@@ -30,7 +30,7 @@
     import IdentityService from '../services/IdentityService'
     import {BlockchainsArray, Blockchains} from '../models/Blockchains';
     import KeyPair from '../models/KeyPair';
-    import ecc from 'eosjs-ecc';
+    import ecc from 'enujs-ecc';
     import PluginRepository from '../plugins/PluginRepository'
     import KeyPairService from '../services/KeyPairService'
 

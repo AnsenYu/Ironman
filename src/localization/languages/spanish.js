@@ -169,7 +169,7 @@ export default {
 
     [KEYS.KEYPAIR_Header]:`Generar nuevo Par de Llaves`,
     [KEYS.KEYPAIR_Description]:`
-        Puedes usar este panel para generar pares de llaves de EOS. Estos pares de llaves se generan localmente 
+        Puedes usar este panel para generar pares de llaves de ENU. Estos pares de llaves se generan localmente 
         en tu máquina y nunca se envían a ningún lado. También puedes pegar un par de llaves y verificar que la llave 
         privada coincida con la llave pública. Ten en cuenta que esas llaves se generan utilizando la entropía recopilada 
         de tu ordenador y no de una semilla específica.
@@ -259,7 +259,7 @@ export default {
         'Host de la Red Inválido',
 
         `El Host de Red que has ingresado es inválido. Los Hosts deben ser un nombre de dominio
-         ( ej.: testnet.eos.io ) o una IP ( ej.: 192.168.0.1 ).`
+         ( ej.: testnet.enu ) o una IP ( ej.: 192.168.0.1 ).`
     ],
     //2
     [KEYS.ALERT_NetworkExists]:[
