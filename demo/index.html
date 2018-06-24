@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scatter DEMO</title>
+    <script type="text/javascript" src="/static/js/enu.js"></script>
+    <script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="http://www.bichlmeier.info/sha256.js"></script>
+</head>
+
+<body>
+
+Hi this is Scatter Demo, Please see console logs.
+
+</body>
+<script>
+    document.addEventListener('scatterLoaded', scatterExtension => {
+
+
+        const scatter = window.scatter;
+        //防止别的网页应用 调用window.scatter 对象
+        window.scatter = null;
+
+        // If you want to require a specific version of Scatter
+        scatter.requireVersion(4.0);
+
+
+        const enuNetwork = {
+            blockchain: 'enu'
+            // host: 'rpc.enu.one',//'127.0.0.1', // ( or null if endorsed chainId )
+            //port: 443, // ( or null if defaulting to 80 )
+        }
+
+        //给用户推荐网络， 第一次需要授权
+        //scatter.suggestNetwork(enuNetwork);
+
+        // scatter.getIdentity 用户授权页面
+        // scatter.getIdentity({ accounts:[enuNetwork],personal:['email'] }).then(
+        scatter.getIdentity({ accounts:[enuNetwork] }).then(
+        // scatter.getIdentity().then(
+            identity => {
+
+                //1. 用户授权完成后，获取用户的EOS帐号名字（12位长度），传给后台完成登录or注册操作操作
+                console.log("identity is ",identity);
+                const account = identity.accounts.find(acc => acc.blockchain === 'enu');
+                console.log("1. 用户授权完成后，获取用户信息，提交给后台完成用户登录or注册",identity);
+//                const  chainId = "1c6ae7719a2a3b4ecb19584a30ff510ba1b6ded86e1fd8b8fc22f1179c622a32"
+                //EOS参数，仅签名不广播交易
+                const enuOptions = {
+                    broadcast : true,
+                    chainId:"cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f"
+                }
+                //获取EOS instance
+                const enu = scatter.enu(enuNetwork, Enu, enuOptions,"https");
+
+                const requiredFields = {
+                    accounts:[enuNetwork],
+//                    chainId:"1c6ae7719a2a3b4ecb19584a30ff510ba1b6ded86e1fd8b8fc22f1179c622a32"
+                }
+                const amount = "1.0000 ENU";
+                //执行智能合约
+                enu.contract('enu.token',{requiredFields}).then(contract => {
+                    contract.transfer(account.name, "disneyland", amount, 'buycandles|40',).then(trx => {
+                        console.log("2.获取签名后的交易，前端需要将此数据传入后台", trx);
+//                        submit(trx);
+                    }).catch(e => {
+                        console.log("error", e);
+                        if (e.toString().includes("overdrawn balance")) {
+                            alert("No money, go back to Getting Started and refill")
+                        }
+                    })
+                });
+            }).catch(
+                e => {
+                    console.log("error",e);
+                }
+            );
+    })
+
+
+    function submit(trx) {
+        var req = {
+            "token":"9f931e9943024ba79f2c2ce1923f0236",
+            "trans":JSON.stringify(trx)
+        }
+        var options = {
+            url : "/api/enu/pushSignature",
+            type : "POST",
+            data: req,
+            dataType : 'json',
+            success : function(result) {
+                if(result.result==1){
+
+                }else{
+
+                    alert(result.message);
+                }
+            },
+            error : function(e) {
+
+                alert("出现错误 ，请重试");
+            }
+        };
+        $.ajax(options);
+
+    }
+
+    function serverSign(buf) {
+        var req = {
+            "token":"9f931e9943024ba79f2c2ce1923f0236",
+            "trans":JSON.stringify(buf)
+        }
+        var options = {
+            url : "/api/enu/pushSignature",
+            type : "POST",
+            data: req,
+            dataType : 'json',
+            success : function(result) {
+                if(result.result==1){
+
+                }else{
+
+                    alert(result.message);
+                }
+            },
+            error : function(e) {
+
+                alert("出现错误 ，请重试");
+            }
+        };
+        $.ajax(options);
+
+    }
+
+
+
+</script>
+</html>
