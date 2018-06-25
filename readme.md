@@ -2,7 +2,7 @@
 
 Ironman is a fork from Scatter, and it is ported to support enumivo mainnet.
 
-The simplest way to use ironman is to install the `ironman.crx` in your Chrome browser, set up the keys and identity, and use this demo:[http://enuvote.com/ironmandemo](http://enuvote.com/ironmandemo)
+The simplest way to use ironman is to install the `ironman.crx` in your Chrome browser, set up the keys and identity, and use this demo:[http://enuvote.com/ironmandemo.html](http://enuvote.com/ironmandemo.html)
 
 # Scatter
 
