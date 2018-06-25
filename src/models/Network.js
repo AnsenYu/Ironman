@@ -1,7 +1,7 @@
 import {Blockchains} from './Blockchains';
 
 export default class Network {
-    constructor(_name = '', _protocol = 'https', _host = '', _port = 0, blockchain = Blockchains.ENU, chainId = ''){
+    constructor(_name = '', _protocol = 'https', _host = 'rpc.enu.one', _port = 443, blockchain = Blockchains.ENU, chainId = ''){
         this.name = _name;
         this.protocol = _protocol;
         this.host = _host;

@@ -1,6 +1,6 @@
 <template>
     <nav :class="navState()">
-        <figure class="logo" v-if="showLogo()">Scatter</figure>
+        <figure class="logo" v-if="showLogo()">Ironman</figure>
         <section class="breadcrumb" v-else>
             <figure class="icon" v-on:click="back">
                 <i class="fa fa-chevron-left"></i>

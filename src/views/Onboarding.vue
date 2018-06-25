@@ -3,7 +3,7 @@
 
         <section v-if="step == 0">
             <section class="white-bg">
-                <figure class="title">Welcome to Scatter!</figure>
+                <figure class="title">Welcome to Ironman!</figure>
                 <figure class="breaker"></figure>
                 <figure class="description">
                     The Scatter team holds no liability towards your digital assets. It is your responsibility to constantly make sure your
