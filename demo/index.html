@@ -11,6 +11,7 @@
 <body>
 
 Hi this is Ironman Demo, Please see console logs.
+This demo sends 1 ENU to ansenironman.
 
 </body>
 <script>
@@ -54,7 +55,7 @@ Hi this is Ironman Demo, Please see console logs.
                 const amount = "1.0000 ENU";
                 //执行智能合约
                 enu.contract('enu.token',{requiredFields}).then(contract => {
-                    contract.transfer(account.name, "disneylandgo", amount, 'buycandles|40',).then(trx => {
+                    contract.transfer(account.name, "ansenironman", amount, 'test Ironman demo',).then(trx => {
                         console.log("2.获取签名后的交易，前端需要将此数据传入后台", trx);
 //                        submit(trx);
                     }).catch(e => {
