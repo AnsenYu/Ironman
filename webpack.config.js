@@ -39,7 +39,7 @@ const filesToPack = [
   'background.js',
   'popup.js',
   'content.js',
-  'inject.js',
+  'injectx.js',
   'prompt.js',
   'scatterdapp.js',
   'styles.scss',

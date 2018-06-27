@@ -15,7 +15,7 @@ import {strippedHost} from './util/GenericTools'
 let stream = new WeakMap();
 
 // The filename of the injected communication script.
-let INJECTION_SCRIPT_FILENAME = 'inject.js';
+let INJECTION_SCRIPT_FILENAME = 'injectx.js';
 
 let isReady = false;
 
