@@ -2,10 +2,12 @@
 
 Ironman is a fork from Scatter, and it is ported to support enumivo mainnet.
 
-## Install the Chrome Extentsion files
+## Install the Ironman Chrome Extentsion files
 [Go to Chrome Store](https://chrome.google.com/webstore/detail/ironman/janbppjcbfhklbggcgkpiefmondofolo)
 
 demo website:[http://enuvote.com/ironmandemo.html](http://enuvote.com/ironmandemo.html)
+
+### ---------------- BELOW IS INTRO OF SCATTER -----------------
 
 # Scatter
 
