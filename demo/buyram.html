@@ -55,9 +55,10 @@ This demo buys 1 ENU ram.
                     accounts:[enuNetwork]
                 }
                 const amount = "1.0000 ENU";
+                const to_account = "ansenironman";
                 //执行智能合约
                 enu.contract('enumivo',{requiredFields}).then(contract => {
-                    contract.buyram(account.name, account.name, amount,).then(trx => {
+                    contract.buyram(account.name, to_account, amount,).then(trx => {
                         console.log("2.获取签名后的交易，前端需要将此数据传入后台", trx);
 //                        submit(trx);
                     }).catch(e => {
