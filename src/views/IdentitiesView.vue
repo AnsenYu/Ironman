@@ -80,10 +80,12 @@
                 <section class="panel">
                     <section class="actions">
                         <figure v-on:click="goToIdentity(identity)" class="action"><i class="fa fa-pencil"></i></figure>
+                            <!--
                         <section v-if="Object.keys(identity.accounts).length">
                             <figure class="action" @click="showingTokens = identity" v-if="!showingTokensFor(identity)"><i class="fa fa-circle-thin"></i></figure>
                             <figure class="action" @click="showingTokens = null" v-else><i class="fa fa-times-circle"></i></figure>
                         </section>
+                            -->
                         <figure class="action red right" v-on:click="removeIdentity(identity)"><i class="fa fa-minus-square"></i></figure>
                     </section>
                 </section>
@@ -134,6 +136,7 @@
                 return this.showingTokens && (identity.publicKey === this.showingTokens.publicKey);
             },
             async bindBalances(identity){
+                console.log("enter bindBalances for identity: ", identity)
                 this.loadingTokenBalances = identity.publicKey;
                 let netAccountMap = [];
                 Object.keys(identity.accounts).map(netString =>
@@ -141,9 +144,11 @@
 
                 netAccountMap = ObjectHelpers.distinct(netAccountMap);
 
+                console.log("Before Promise")
                 await Promise.all(netAccountMap.map(async netAccount => {
                     await this.accountBalances(netAccount, identity);
                 }));
+                console.log("After Promise")
 
                 this.loadingTokenBalances = null;
             },
@@ -202,6 +207,7 @@
         watch:{
             showingTokens(){
                 this.balances = [];
+                console.log("this:", this)
                 if(this.showingTokens)
                     this.bindBalances(this.showingTokens)
             }
