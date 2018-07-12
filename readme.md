@@ -152,13 +152,18 @@ const network = {
     blockchain:'eos',
     host:'127.0.0.1', // ( or null if endorsed chainId )
     port:8888, // ( or null if defaulting to 80 )
-    chainId:1 || 'abcd', // Or null to fetch automatically ( takes longer )
+    chainId:1 || 'abcd',
 }
 ```
 
+**A note about chainId** - If the user has a chainId in their network inside of Scatter providing the host/port
+will not be enough. You should always aim for chainId inclusion.
+
 Scatter has a few endorsed networks that is uses for retrieving information such as an 
-`EOS Mainnet ( chainId ? )` and `ETH Mainnet ( chainId 1 )`. If you are using those you can 
-simply leave the `host` and `port` null and it will default to the chainId internally. 
+`EOS Mainnet ( chainId aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906 )` 
+and `ETH Mainnet ( chainId 1 )`. If you are using those you can 
+simply leave the `host` and `port` null and it will default to the chainId internally when fetching accounts from 
+the identity. 
 
 #### Suggesting a network to the user
 
@@ -183,7 +188,7 @@ to accept or deny the addition.
 const eosOptions = {};
  
 // Get a reference to an 'Eosjs' instance with a Scatter signature provider.
-const eos = scatter.eos( network, Eos.Localnet, eosOptions, 'https' );
+const eos = scatter.eos( network, Eos, eosOptions, 'https' );
 ```
 
 
@@ -470,7 +475,7 @@ allows a handful of methods which can interact with the Scatter extension:
 Normally when you use `eosjs` you have to give it a private key to work with.
 
 ```js
-const eos = Eos.Localnet({httpEndpoint:ENDPOINT, keyProvider:PRIVATE_KEY});
+const eos = Eos({httpEndpoint:ENDPOINT, keyProvider:PRIVATE_KEY});
 eos.transfer('users_account', 'some_other_account', 100000, '');
 ```
 
@@ -493,7 +498,7 @@ The only way for a website to push requests into Scatter and use it's private ke
 const identity = await scatter.getIdentity();
 -------------------------
 // The object returned here has no network, and no signature or key provider
-const eos = scatter.eos( network, Eos.Localnet, {} );
+const eos = scatter.eos( network, Eos, {} );
 -------------------------
 // When the transfer method is called the network and signature provider 
 // are bound outside of the website's accessible application scope.

@@ -9,6 +9,8 @@ import InternalMessage from '../messages/InternalMessage'
 import * as InternalMessageTypes from '../messages/InternalMessageTypes'
 import PluginRepository from '../plugins/PluginRepository'
 import RIDLService from '../services/RIDLService'
+import StorageService from '../services/StorageService'
+import IdGenerator from '../util/IdGenerator'
 import ridl from 'ridl';
 
 export const actions = {
@@ -65,12 +67,19 @@ export const actions = {
 
     [Actions.IMPORT_SCATTER]:({dispatch}, {imported, seed}) => {
         return new Promise(async (resolve, reject) => {
+
             const scatter = Scatter.fromJson(imported);
+
             scatter.settings.hasEncryptionKey = true;
+
+            const networkUniques = scatter.settings.networks.map(network => network.unique());
             await Promise.all(PluginRepository.signatureProviders().map(async plugin => {
                 const network = await plugin.getEndorsedNetwork();
+
+                scatter.settings.networks = scatter.settings.networks.filter(_network => _network.unique() !== network.unique());
                 scatter.settings.networks.push(network);
             }));
+
             scatter.meta = new Meta();
 
             InternalMessage.payload(InternalMessageTypes.SET_SEED, seed).send().then(() => {
@@ -98,6 +107,8 @@ export const actions = {
                 firstIdentity.name = identified;
                 scatter.keychain.updateOrPushIdentity(firstIdentity);
             }
+
+            await StorageService.setSalt(Hasher.insecureHash(IdGenerator.text(32)));
 
             dispatch(Actions.SET_SEED, password).then(mnemonic => {
                 dispatch(Actions.UPDATE_STORED_SCATTER, scatter).then(_scatter => {
