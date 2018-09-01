@@ -1,6 +1,8 @@
 
 export const Blockchains = {
+    EOS:'eos',
     ENU:'enu',
+    FIBOS:'fibos',
     ETH:'eth'
 };
 

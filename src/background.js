@@ -74,6 +74,7 @@ export default class Background {
             case InternalMessageTypes.REQUEST_GET_VERSION:              Background.requestGetVersion(sendResponse); break;
             case InternalMessageTypes.REQUEST_VERSION_UPDATE:           Background.requestVersionUpdate(sendResponse, message.payload); break;
             case InternalMessageTypes.AUTHENTICATE:                     Background.authenticate(sendResponse, message.payload); break;
+            case InternalMessageTypes.AUTHENTICATE_FIBOS:               Background.authenticate_fibos(sendResponse, message.payload); break;
             case InternalMessageTypes.ABI_CACHE:                        Background.abiCache(sendResponse, message.payload); break;
             case InternalMessageTypes.SET_PROMPT:                       Background.setPrompt(sendResponse, message.payload); break;
             case InternalMessageTypes.GET_PROMPT:                       Background.getPrompt(sendResponse); break;
@@ -326,6 +327,26 @@ export default class Background {
                 identity.decrypt(seed);
 
                 const plugin = PluginRepository.plugin(Blockchains.ENU);
+                plugin.signer(this, {data:payload.domain}, identity.publicKey, sendResponse, true);
+            })
+        })
+    }
+
+    /***
+     * for fibos
+     * Authenticates the Identity by returning a signed passphrase using the
+     * private key associated with the Identity
+     * @param sendResponse
+     * @param payload
+     */
+    static authenticate_fibos(sendResponse, payload){
+        this.lockGuard(sendResponse, () => {
+            Background.load(scatter => {
+                const identity = scatter.keychain.findIdentity(payload.publicKey);
+                if(!identity) return sendResponse(Error.identityMissing());
+                identity.decrypt(seed);
+
+                const plugin = PluginRepository.plugin(Blockchains.FIBOS);
                 plugin.signer(this, {data:payload.domain}, identity.publicKey, sendResponse, true);
             })
         })

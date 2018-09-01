@@ -20,19 +20,13 @@ export default class KeyPairService {
 
                 let publicKey = '';
 
-                BlockchainsArray.map(blockchainKV => {
                     try {
-                        if(!publicKey.length) {
-                            const blockchain = blockchainKV.value;
-
-                            const plugin = PluginRepository.plugin(blockchain);
+                            const plugin = PluginRepository.plugin(keypair.blockchain);
                             if (plugin && plugin.validPrivateKey(keypair.privateKey)) {
                                 publicKey = plugin.privateToPublic(keypair.privateKey);
                                 keypair.blockchain = blockchain;
                             }
-                        }
                     } catch(e){}
-                });
 
                 if(publicKey) keypair.publicKey = publicKey;
                 resolve(true);

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ironman DEMO</title>
+    <script type="text/javascript" src="/static/js/eos.js"></script>
+    <script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
+    <!--
+    <script type="text/javascript" src="http://www.bichlmeier.info/sha256.js"></script>
+    -->
+</head>
+
+<body>
+
+Hi this is Ironman Demo, Please see console logs.
+This demo sends 0.0001 EOS to oooooooooook.
+
+</body>
+<script>
+    document.addEventListener('ironmanLoaded', ironmanExtension => {
+
+
+        const ironman = window.ironman;
+        //防止别的网页应用 调用window.ironman 对象
+        window.ironman = null;
+
+        // If you want to require a specific version of Scatter
+        ironman.requireVersion(1.1);
+
+
+        const eosNetwork = {
+            name: 'EOS Mainnet',
+            protocol: 'https',
+            port: 443,
+            host: 'nodes.get-scatter.com',
+            blockchain: 'eos',
+            chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
+        }
+
+        //给用户推荐网络， 第一次需要授权
+        //ironman.suggestNetwork(eosNetwork);
+
+        // ironman.getIdentity 用户授权页面
+        ironman.getIdentity({ accounts:[eosNetwork] }).then(
+            identity => {
+
+                //1. 用户授权完成后，获取用户的ENU帐号名字（12位长度），传给后台完成登录or注册操作操作
+                const account = identity.accounts.find(acc => acc.blockchain === 'eos');
+                console.log("1. 用户授权完成后，获取用户信息，提交给后台完成用户登录or注册",identity);
+                //ENU参数，仅签名不广播交易
+                const eosOptions = {
+                    broadcast : true,
+                    chainId:"aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906"
+                }
+                //获取ENU instance
+                const eos = ironman.fibos(eosNetwork, Eos, eosOptions,"http");
+
+                const requiredFields = {
+                    accounts:[eosNetwork]
+                }
+                const amount = "0.0001 EOS";
+                //执行智能合约
+                eos.contract('eosio.token',{requiredFields}).then(contract => {
+                    contract.transfer(account.name, "oooooooooook", amount, 'test Ironman demo',).then(trx => {
+                        console.log("2.获取签名后的交易，前端需要将此数据传入后台", trx);
+//                        submit(trx);
+                    }).catch(e => {
+                        console.log("error", e);
+                        if (e.toString().includes("overdrawn balance")) {
+                            alert("No money, go back to Getting Started and refill")
+                        }
+                    })
+                });
+            }).catch(
+                e => {
+                    console.log("error",e);
+                }
+            );
+    })
+
+</script>
+</html>

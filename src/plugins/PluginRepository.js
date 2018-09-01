@@ -1,6 +1,8 @@
 import * as PluginTypes from './PluginTypes';
+import EOS from './defaults/eos';
 import ENU from './defaults/enu';
 import ETH from './defaults/eth';
+import FIBOS from './defaults/fibos';
 
 /***
  * Setting up for plugin based generators,
@@ -15,8 +17,10 @@ class PluginRepositorySingleton {
     }
 
     loadPlugins(){
+        this.plugins.push(new EOS());
         this.plugins.push(new ENU());
         this.plugins.push(new ETH());
+        this.plugins.push(new FIBOS());
     }
 
     signatureProviders(){
