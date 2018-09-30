@@ -21,6 +21,8 @@ let networkGetter = new WeakMap();
 let messageSender = new WeakMap();
 let throwIfNoIdentity = new WeakMap();
 
+const Long = require('long');
+
 const proxy = (dummy, handler) => new Proxy(dummy, handler);
 
 export default class ENU extends Plugin {
@@ -128,6 +130,19 @@ export default class ENU extends Plugin {
             else sig = ecc.sign(Buffer.from(arbitrary ? payload.data : payload.buf.data, 'utf8'), privateKey);
 
             callback(sig);
+        }, publicKey)
+    }
+
+    decrypt(bgContext, payload, publicKey, randPublicKey, callback, nonce, checksum){
+        bgContext.publicToPrivate(privateKey => {
+            if(!privateKey){
+                callback(null);
+                return false;
+            }
+
+            let dec;
+            dec = ecc.Aes.decrypt(privateKey, randPublicKey, Long.fromString(nonce), Buffer.from(payload.data, 'hex'), checksum);
+            callback(dec);
         }, publicKey)
     }
 

@@ -200,4 +200,19 @@ export default class Scatterdapp {
         }, true);
     }
 
+    /***
+     * Requests a decrypt for cipher text.
+     * @param publicKey
+     * @param data - The data to be signed
+     */
+    getDecryptCipherData(publicKey, randPublicKey, data, nonce, checksum){
+        return _send(NetworkMessageTypes.REQUEST_DECRYPT_CIPHER_DATA, {
+            publicKey,
+            randPublicKey,
+            data,
+            nonce,
+            checksum 
+        }, true);
+    }
+
 }

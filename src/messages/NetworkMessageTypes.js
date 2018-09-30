@@ -6,6 +6,7 @@ export const FORGET_IDENTITY = 'forgetIdentity';
 export const REQUEST_SIGNATURE = 'requestSignature';
 export const ABI_CACHE = 'abiCache';
 export const REQUEST_ARBITRARY_SIGNATURE = 'requestArbitrarySignature';
+export const REQUEST_DECRYPT_CIPHER_DATA = 'requestDecryptCipherData';
 export const REQUEST_ADD_NETWORK = 'requestAddNetwork';
 export const REQUEST_VERSION_UPDATE = 'requestVersionUpdate';
 export const AUTHENTICATE = 'authenticate';

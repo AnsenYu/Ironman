@@ -70,6 +70,7 @@ export default class Background {
             case InternalMessageTypes.FORGET_IDENTITY:                  Background.forgetIdentity(sendResponse, message.payload); break;
             case InternalMessageTypes.REQUEST_SIGNATURE:                Background.requestSignature(sendResponse, message.payload); break;
             case InternalMessageTypes.REQUEST_ARBITRARY_SIGNATURE:      Background.requestArbitrarySignature(sendResponse, message.payload); break;
+            case InternalMessageTypes.REQUEST_DECRYPT_CIPHER_DATA:      Background.requestDecryptCipherData(sendResponse, message.payload); break;
             case InternalMessageTypes.REQUEST_ADD_NETWORK:              Background.requestAddNetwork(sendResponse, message.payload); break;
             case InternalMessageTypes.REQUEST_GET_VERSION:              Background.requestGetVersion(sendResponse); break;
             case InternalMessageTypes.REQUEST_VERSION_UPDATE:           Background.requestVersionUpdate(sendResponse, message.payload); break;
@@ -383,6 +384,14 @@ export default class Background {
         this.lockGuard(sendResponse, () => {
             Background.load(scatter => {
                 SignatureService.requestArbitrarySignature(payload, scatter, this, sendResponse);
+            })
+        })
+    }
+
+    static requestDecryptCipherData(sendResponse, payload){
+        this.lockGuard(sendResponse, () => {
+            Background.load(scatter => {
+                SignatureService.requestDecryptCipherData(payload, scatter, this, sendResponse);
             })
         })
     }

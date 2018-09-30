@@ -15,6 +15,35 @@ import PluginRepository from '../plugins/PluginRepository'
 
 export default class SignatureService {
 
+    static requestDecryptCipherData(payload, scatter, context, sendResponse){
+        const {publicKey, domain, data} = payload;
+
+        const identitySigner = scatter.keychain.identities.find(id => id.publicKey === publicKey);
+        const accountSigners = scatter.keychain.findAccountsWithPublicKey(publicKey);
+        if(!identitySigner && !accountSigners.length) {
+            sendResponse(Error.signatureError("signature_rejected", "User rejected the signature request"));
+            return false;
+        }
+
+        NotificationService.open(new Prompt(PromptTypes.REQUEST_DECRYPT_CIPHER_DATA, domain, null, Object.assign(payload, {identitySigner, accountSigners}), approval => {
+            if(!approval || !approval.hasOwnProperty('accepted')){
+                sendResponse(Error.signatureError("signature_rejected", "User rejected the signature request"));
+                return false;
+            }
+
+            PluginRepository.plugin(KeyPair.blockchain(publicKey)).decrypt(context, payload, publicKey, payload.randPublicKey, plaintext => {
+                if(!plaintext){
+                    sendResponse(Error.maliciousEvent());
+                    return false;
+                }
+
+                sendResponse(plaintext);
+            }, payload.nonce, payload.checksum)
+        }));
+
+
+    }
+
     static requestArbitrarySignature(payload, scatter, context, sendResponse){
         const {publicKey, domain, data} = payload;
 
