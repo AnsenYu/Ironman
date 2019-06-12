@@ -1,3 +1,3 @@
 
 export const INJECTED = 'injectedx';
-export const SCATTER = 'ironman';
+export const SCATTER = 'fiberman';
