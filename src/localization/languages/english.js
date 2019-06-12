@@ -53,11 +53,11 @@ export default {
     [KEYS.BUTTON_SetAsDefaultLocation]:'Set As Default Location',
     [KEYS.BUTTON_RemoveLocation]:'Remove Location',
     [KEYS.BUTTON_ChangePassword]:'Change Password',
-    [KEYS.BUTTON_DestroyScatter]:'Destroy Ironman ',
-    [KEYS.BUTTON_CreateNewScatter]:'Create New Ironman ',
+    [KEYS.BUTTON_DestroyScatter]:'Destroy Fiberman ',
+    [KEYS.BUTTON_CreateNewScatter]:'Create New Fiberman ',
     [KEYS.BUTTON_LoadFromBackup]:'Load From Backup',
     [KEYS.BUTTON_Unlock]:'Unlock',
-    [KEYS.BUTTON_ExportScatter]:'Export Ironman ',
+    [KEYS.BUTTON_ExportScatter]:'Export Fiberman ',
     [KEYS.BUTTON_GenerateKeyPair]:'Generate Key Pair',
     [KEYS.BUTTON_Validate]:'Validate',
     [KEYS.BUTTON_Copy]:'Copy',
@@ -131,12 +131,12 @@ export default {
 
     [KEYS.HISTORIES_Header]:`You don't have any historic events to display.`,
     [KEYS.HISTORIES_Description]:`
-        Once you have them, you will be able to see a list of all of the events that pass through your Ironman.
+        Once you have them, you will be able to see a list of all of the events that pass through your Fiberman.
         What you will not see is events that occurred on your accounts outside of scatter.
      `,
     [KEYS.HISTORIES_Note]:`
-        Note: Exporting your Ironman data from the backup option in the settings panel does not save these events.
-        When you import that Ironman instance again your histories will be empty. If you would like to export your histories
+        Note: Exporting your Fiberman data from the backup option in the settings panel does not save these events.
+        When you import that Fiberman instance again your histories will be empty. If you would like to export your histories
         in the future you can do so using the action buttons on the navbar within this panel.
     `,
 
@@ -150,13 +150,13 @@ export default {
 
     [KEYS.BACKUP_Header]:`Export encrypted backup`,
     [KEYS.BACKUP_Description]:`
-        Exporting your Ironman allows you to import it into other devices. The file will still be encrypted when it is 
+        Exporting your Fiberman allows you to import it into other devices. The file will still be encrypted when it is 
         exported so make sure you have either your mnemonic or your password, otherwise it will be useless. 
     `,
 
     [KEYS.IMPORT_Header]:`Import encrypted backup`,
     [KEYS.IMPORT_Description]:`
-        Importing your encrypted keychain file will rebuild you Ironman keychain but it will not import your old networks or 
+        Importing your encrypted keychain file will rebuild you Fiberman keychain but it will not import your old networks or 
         accounts. 
     `,
 
@@ -174,11 +174,11 @@ export default {
         that network you will need to have an account there as well.
     `,
 
-    [KEYS.DESTROY_Header]:`Destroying Ironman`,
+    [KEYS.DESTROY_Header]:`Destroying Fiberman`,
     [KEYS.DESTROY_Description]:`
-        You are about to destroy your entire Ironman keychain. The only way to get this exact Ironman back is by 
-        importing an exported Ironman JSON. You will not be able to claim your identities otherwise. Make sure you 
-        have exported your Ironman from the backup settings panel before hand.
+        You are about to destroy your entire Fiberman keychain. The only way to get this exact Fiberman back is by 
+        importing an exported Fiberman JSON. You will not be able to claim your identities otherwise. Make sure you 
+        have exported your Fiberman from the backup settings panel before hand.
     `,
 
     [KEYS.LANGUAGE_Header]:`Select your language`,
@@ -193,7 +193,7 @@ export default {
         You can use this panel to generate key pairs. These key pairs are generated locally on your machine 
         and are never sent anywhere. You can also paste in a private key and it will automatically generate the public key.
     `,
-    [KEYS.KEYPAIR_Important]:`Save your private key elsewhere! You can not take private keys back out of Ironman.`,
+    [KEYS.KEYPAIR_Important]:`Save your private key elsewhere! You can not take private keys back out of Fiberman.`,
     [KEYS.KEYPAIR_Validation_Header]:`Generate a new Key Pair`,
     [KEYS.KEYPAIR_Validation_Valid]:`The private key is valid and the public key generated from it matches the public key provided.`,
     [KEYS.KEYPAIR_Validation_Invalid]:`The public key generated from the private key did not match the public key provided!`,
@@ -201,8 +201,8 @@ export default {
 
     [KEYS.LOCK_Header]:`Auto Lock Timer`,
     [KEYS.LOCK_Description]:`
-        Auto Lock handles Ironman's locking for you so that you don't have to 
-        remember to lock your Ironman when you step away.
+        Auto Lock handles Fiberman's locking for you so that you don't have to 
+        remember to lock your Fiberman when you step away.
     `,
     [KEYS.LOCK_Minute]:`Minute`,
     [KEYS.LOCK_Minutes]:`Minutes`,
@@ -212,10 +212,10 @@ export default {
 
 
     [KEYS.MNEMONIC_Header]:`Mnemonic`,
-    [KEYS.MNEMONIC_Description]:`Mnemonics in Ironman are only used for password recovery.`,
+    [KEYS.MNEMONIC_Description]:`Mnemonics in Fiberman are only used for password recovery.`,
     [KEYS.MNEMONIC_Note]:`
         Be sure to save yours somewhere safe. It is the only way to regain access to your 
-        Ironman and decrypt your private information if you forget your password.
+        Fiberman and decrypt your private information if you forget your password.
     `,
 
     [KEYS.ERROR_MustSelectItem]:`You must select an item.`,
@@ -306,7 +306,7 @@ export default {
     [KEYS.ALERT_RemovingEndorsedNetwork]:[
         'Cannot Remove Endorsed Network',
 
-        `You cannot remove Ironman's endorsed Networks.`
+        `You cannot remove Fiberman's endorsed Networks.`
     ],
     //2
     [KEYS.ALERT_NoIdentityWithProperties]:fields => [
@@ -323,7 +323,7 @@ export default {
     ],
     //2
     [KEYS.PROMPT_DestroyingScatter]:[
-        'Destroying Ironman',
+        'Destroying Fiberman',
 
         'This is your last chance to double check your backups.'
     ],
@@ -397,11 +397,11 @@ export default {
 
     //3
     [KEYS.REQUEST_AddNetwork]:[
-        /*{DOMAIN}*/ 'wants to add their network to your Ironman.',
+        /*{DOMAIN}*/ 'wants to add their network to your Fiberman.',
 
         'Some applications use their own Networks.',
 
-        `This in no way gives the application any access to your Ironman. 
+        `This in no way gives the application any access to your Fiberman. 
          Adding a network through this interface simply saves you
          the effort of manually adding it from your Settings panel.`
     ],
@@ -443,26 +443,26 @@ export default {
     ],
     //4
     [KEYS.REQUEST_ScatterIsLocked]:[
-        `Your Ironman is locked!`,
+        `Your Fiberman is locked!`,
 
-        `Before you can do anything with your Ironman you will need to unlock it.`,
+        `Before you can do anything with your Fiberman you will need to unlock it.`,
 
         `We will purposely never show a prompt/popup which requires you to log in.`,
 
         `If you see a prompt/popup which is requesting your password, it is a malicious website trying to get your password.
-         Always only unlock Ironman from the extension's popup by clicking on the icon in your browser tray.`
+         Always only unlock Fiberman from the extension's popup by clicking on the icon in your browser tray.`
     ],
     //4
     [KEYS.REQUEST_UpdateVersion]:[
-        `Your Ironman is out of date!`,
+        `Your Fiberman is out of date!`,
 
-        /*{DOMAIN}*/ `is requiring you have a version of Ironman that is newer than the one installed.`,
+        /*{DOMAIN}*/ `is requiring you have a version of Fiberman that is newer than the one installed.`,
 
         `This usually means that new functionality was released and an application is trying to use it but it's not
          currently included in the build you have installed.`,
 
         `Please Note, we leave version checking up to the applications themselves. They could be maliciously trying to
-         get you to download something. Make sure you always download Ironman from the proper location.`
+         get you to download something. Make sure you always download Fiberman from the proper location.`
     ],
 
 }

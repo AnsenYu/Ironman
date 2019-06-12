@@ -1,0 +1,68 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Ironman DEMO</title>
+        <script type="text/javascript" src="/static/js/web3.min.js"></script>
+        <script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
+    </head>
+
+    <body>
+        Hi this is Ironman Demo, Please see console logs. This demo sends 0.0001 FO to ansenironman.
+    </body>
+    <script>
+        document.addEventListener('ironmanLoaded', ironmanExtension => {
+            const ironman = window.ironman
+            console.log('ironman', ironman)
+            //防止别的网页应用 调用window.ironman 对象
+            // window.ironman = null
+
+            // If you want to require a specific version of Scatter
+            // ironman.requireVersion(1.2)
+
+            const protocol = 'http' || 'ws';
+
+            const ethNetwork = {
+                name: 'Test_ETH',
+                protocol: 'http',
+                host: '115.47.144.69',
+                port: 8545,
+                blockchain: 'eth',
+                chainId: '3',
+
+               /* name: 'ETH Mainnet',
+                protocol: 'http',
+                host: 'ethereum.com',
+                port: 8080,
+                blockchain: 'eth',
+                chainId: '1',*/
+            }
+
+            //给用户推荐网络， 第一次需要授权
+            //ironman.suggestNetwork(ethNetwork);
+
+            // ironman.getIdentity 用户授权页面
+            ironman
+                .getIdentity({ accounts: [ethNetwork] })
+                .then(identity => {
+                    console.log('identity', identity)
+                    //1. 用户授权完成后，获取用户的ENU帐号名字（12位长度），传给后台完成登录or注册操作操作
+                    const account = identity.accounts.find(acc => acc.blockchain === 'eth')
+                    console.log('account', account)
+                    console.log('1. 用户授权完成后，获取用户信息，提交给后台完成用户登录or注册', identity)
+
+                    const eth = ironman.eth(ethNetwork, Web3, protocol).eth
+                    console.log("web3", web3);
+
+                    const amount = '1'
+                    eth.sendTransaction({
+                        from: account.publicKey,
+                        to: '0x51f088dcAfC19C019f16b00154182a2BFbE97BCf',
+                        value: amount
+                    })
+                })
+                .catch(e => {
+                    console.log('error', e)
+                })
+        })
+    </script>
+</html>
