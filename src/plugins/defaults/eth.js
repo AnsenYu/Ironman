@@ -38,6 +38,7 @@ class ScatterEthereumWallet {
     }
 
     async signTransaction(transaction) {
+        console.log('transaction', transaction)
         if (!network) throw Error.noNetwork()
 
         // Basic settings
@@ -50,6 +51,8 @@ class ScatterEthereumWallet {
         if (!requiredFields.isValid()) throw Error.malformedRequiredFields()
 
         // Contract ABI
+
+        // todo
         const abi = transaction.hasOwnProperty('abi') ? transaction.abi : null
         if (!abi && transaction.hasOwnProperty('data'))
             throw Error.signatureError('no_abi', 'You must provide a JSON ABI along with your transaction so that users can read the contract')
@@ -68,18 +71,27 @@ class ScatterEthereumWallet {
 }
 
 const messagesBuilder = async (transaction, abi) => {
+    console.log('transaction', transaction)
     let params = {}
     let methodABI
     if (abi) {
         methodABI = abi.find(method => transaction.data.indexOf(method.signature) !== -1)
+        console.log('methodABI', methodABI)
         if (!methodABI)
             throw Error.signatureError('no_abi_method', 'No method signature on the abi you provided matched the data for this transaction')
 
-        params = web3.eth.abi.decodeParameters(methodABI.inputs, transaction.data.replace(methodABI.signature, ''))
+        const typesArray = methodABI.inputs
+        console.log('typesArray', typesArray)
+        const hexString = transaction.data.replace(methodABI.signature, '0x')
+        console.log('hexString', hexString)
+
+        params = web3.eth.abi.decodeParameters(typesArray, hexString)
+        console.log('params 1', params)
         params = Object.keys(params).reduce((acc, key) => {
             if (methodABI.inputs.map(input => input.name).includes(key)) acc[key] = params[key]
             return acc
         }, {})
+        console.log('params 2', params)
     }
 
     const h2n = web3.utils.hexToNumberString
@@ -123,7 +135,7 @@ export default class ETH extends Plugin {
 
     async isEndorsedNetwork(network) {
         const endorsedNetwork = await this.getEndorsedNetwork()
-        return network.hostport() === endorsedNetwork.hostport() || network.apiUrl() === endorsedNetwork.hostport()
+        return network.hostport() === endorsedNetwork.hostport() || network.getApiUrl() === endorsedNetwork.hostport()
     }
 
     accountsAreImported() {
@@ -177,7 +189,7 @@ export default class ETH extends Plugin {
     }
 
     signatureProvider(...args) {
-        console.log("args", args);
+        console.log('args', args)
         messageSender = args[0]
         throwIfNoIdentity = args[1]
 
